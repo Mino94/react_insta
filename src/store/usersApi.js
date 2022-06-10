@@ -10,6 +10,7 @@ export const getUserById = async (users, id) => {
     //         Authorization: `Bearer ${localStorage.getItem("token")}`,
     //     },
     // });
+    console.log("user");
     return await customAxios(`/user/${id}`, "get");
 };
 export const loginCheckApi = async (users, id) => {
@@ -33,18 +34,15 @@ export const postUser = async (users, user) => {
         url: "http://localhost:8000/user/",
     });
     console.log(response);
-    return [...users, newUser];
+    return await customAxios("/user/", "post", [...users, newUser]);
 };
 
 export const loginApi = async (users, user) => {
     // const checkUser = await users.find((data) => data.userId === user.id && data.password === user.password);
     const newUser = { ...user, userId: user.id, id: null };
-    const response = await axios({
-        method: "post",
-        data: newUser,
-        url: "http://localhost:8000/user/login",
-    });
-    return { isLogin: response.data.token ? true : false, user: response.data };
+    const response = await customAxios("/user/login", "post", newUser);
+
+    return { isLogin: response.token ? true : false, user: response };
 };
 
 export const checkId = async (users, userId) => {

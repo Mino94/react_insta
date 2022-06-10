@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { Post } from "../data/Post";
 import { selectMyFollower, selectMyFollowing } from "./follows";
-import { deletePostById, getPostByKey, getPostByOther, getPostByUserId, getPostMain, postPost } from "./postsApi";
+import { deletePostById, getMyPost, getPostByKey, getPostByOther, getPostByUserId, getPostMain, postPost } from "./postsApi";
 const initialState = {
     posts: Post,
     myPosts: {
@@ -34,10 +34,10 @@ export const selectMyPost = createAsyncThunk(SELECT_MY_POST, async (payload, thu
     const { myId } = thunkAPI.getState().users;
     const { posts } = thunkAPI.getState().posts;
     if (myId) {
-        const myPosts = await getPostByUserId(posts, Number(myId));
+        const myPosts = await getMyPost(posts, Number(myId));
         return myPosts;
     } else if (myId === 0 || myId === "0") {
-        const myPosts = await getPostByUserId(posts, Number(myId));
+        const myPosts = await getMyPost(posts, Number(myId));
         return myPosts;
     }
     return;
