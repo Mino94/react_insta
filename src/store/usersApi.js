@@ -1,26 +1,20 @@
 import axios from "axios";
+import { customAxios } from "../http/CustomAxios";
 
 export const getUserById = async (users, id) => {
     // const findUserById = await users.find((user) => user.id === id);
-    const response = await axios({
-        method: "get",
-        url: `http://localhost:8000/user/${id}`,
-        headers: {
-            Authorization: localStorage.getItem("token"),
-        },
-    });
-    return response;
+    // const response = await axios({
+    //     method: "get",
+    //     url: `http://localhost:8000/user/${id}`,
+    //     headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //     },
+    // });
+    return await customAxios(`/user/${id}`, "get");
 };
 export const loginCheckApi = async (users, id) => {
     // const findUserById = await users.find((user) => user.id === id);
-    const response = await axios({
-        method: "get",
-        url: "http://localhost:8000/user/check",
-        headers: {
-            Authorization: localStorage.getItem("token"),
-        },
-    });
-    return response.data;
+    return await customAxios("/user/check", "get");
 };
 export const getUserByUserId = async (users, userId) => {
     const findUserByUserId = await users.find((user) => user.userId === userId);
