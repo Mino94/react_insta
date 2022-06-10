@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Users } from "../data/User";
-import { checkId, getUserById, getUserByKey, getUserByUserId, loginApi, logoutApi, postUser, putUsers } from "./usersApi";
+import { checkId, getUserById, getUserByKey, loginCheckApi, getUserByUserId, loginApi, logoutApi, postUser, putUsers } from "./usersApi";
 const initialState = {
     users: Users,
     myId: localStorage.getItem("token"),
@@ -25,10 +25,10 @@ export const getCheckId = createAsyncThunk(CHECK_ID, async (userId, thunkAPI) =>
 export const loginCheck = createAsyncThunk(LOGIN_CHECK, async (payload, thunkAPI) => {
     const { users, myId } = thunkAPI.getState().users;
     if (myId) {
-        const me = await getUserById(users, Number(myId));
+        const me = await loginCheckApi(users, Number(myId));
         return me;
     } else if (myId === 0 || myId === "0") {
-        const me = await getUserById(users, Number(myId));
+        const me = await loginCheckApi(users, Number(myId));
         return me;
     }
     return;

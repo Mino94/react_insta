@@ -12,7 +12,7 @@ export const getUserById = async (users, id) => {
     return response;
 };
 export const loginCheckApi = async (users, id) => {
-    const findUserById = await users.find((user) => user.id === id);
+    // const findUserById = await users.find((user) => user.id === id);
     const response = await axios({
         method: "get",
         url: "http://localhost:8000/user/check",
@@ -20,7 +20,7 @@ export const loginCheckApi = async (users, id) => {
             Authorization: localStorage.getItem("token"),
         },
     });
-    return findUserById;
+    return response.data;
 };
 export const getUserByUserId = async (users, userId) => {
     const findUserByUserId = await users.find((user) => user.userId === userId);
